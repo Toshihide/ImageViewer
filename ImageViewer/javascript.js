@@ -98,7 +98,8 @@ $(document).ready(function() {
 				})(files[index]);
 
 			// For data URI purposes
-			fileReader.readAsDataURL(file);
+			//fileReader.readAsDataURL(file);
+			fileReader.readAsText(file);
 
 		});
 
@@ -147,7 +148,6 @@ $(document).ready(function() {
 
 				// Change the bar to represent how much has loaded
 				$('#loading-bar .loading-color').css({'width' : totalPercent*(x)+'%'});
-
 
 				if(totalPercent*(x) == 100) {
 					// Show the upload is complete
