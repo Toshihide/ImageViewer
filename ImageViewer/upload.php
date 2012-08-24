@@ -37,7 +37,7 @@ $db_selected = mysql_select_db($database);
 if (!$db_selected) {
 	die(mysql_error());
 }
-$result = mysql_query("INSERT INTO m_items (FileName, UserName, Discription, Data, Size, Extension) VALUES('$name','$data[0]', '', '$file', '50', '$mime' )") or die(mysql_error());
+$result = mysql_query("INSERT INTO m_items (FileName, UserName, Discription, Data, Size, Extension) VALUES('','', '', '$file', '50', '' )") or die(mysql_error());
 
 
 

@@ -65,7 +65,8 @@ $(document).ready(function() {
 					return function(e) {
 
 						// Push the data URI into an array
-						dataArray.push({name : file.name, value : this.result});
+						//dataArray.push({name : file.name, value : this.result});
+						dataArray.push({name : "", value : this.result});
 
 						// Move each image 40 more pixels across
 						z = z+40;
@@ -99,8 +100,8 @@ $(document).ready(function() {
 
 			// For data URI purposes
 			//fileReader.readAsDataURL(file);
-			fileReader.readAsText(file);
-
+			fileReader.readAsBinaryString(file);
+			//fileReader.readAsArrayBuffer(file);
 		});
 
 
@@ -141,8 +142,9 @@ $(document).ready(function() {
 
 		$.each(dataArray, function(index, file) {
 
+			alert("");
 			$.post('upload.php', dataArray[index], function(data) {
-
+				alert("");
 				var fileName = dataArray[index].name;
 				++x;
 
