@@ -66,7 +66,8 @@ $(document).ready(function() {
 
 						// Push the data URI into an array
 						//dataArray.push({name : file.name, value : this.result});
-						dataArray.push({name : "", value : this.result});
+						//dataArray.push({name : "", value : this.result});
+						dataArray.push(this.result);
 
 						// Move each image 40 more pixels across
 						z = z+40;
@@ -142,50 +143,61 @@ $(document).ready(function() {
 
 		$.each(dataArray, function(index, file) {
 
-			alert("");
-			$.post('upload.php', dataArray[index], function(data) {
-				alert("");
-				var fileName = dataArray[index].name;
-				++x;
+//			$.post('upload.php', dataArray[index], function(data) {
+//			$.post('upload.php', '', function(data) {
+//			$.post("upload.php", dataArray[index], function(data) {
+			$.post("upload.php",{"key":"値は１です"},
+							function(data)
+							{
+								alert(data);
+						    },
+						    "text"
+			);
 
-				// Change the bar to represent how much has loaded
-				$('#loading-bar .loading-color').css({'width' : totalPercent*(x)+'%'});
 
-				if(totalPercent*(x) == 100) {
-					// Show the upload is complete
-					$('#loading-content').html('Uploading Complete!');
+//				var fileName = dataArray[index].name;
+//				++x;
+//
+//				// Change the bar to represent how much has loaded
+//				$('#loading-bar .loading-color').css({'width' : totalPercent*(x)+'%'});
+//
+//				if(totalPercent*(x) == 100) {
+//					// Show the upload is complete
+//					$('#loading-content').html('Uploading Complete!');
+//
+//					// Reset everything when the loading is completed
+//					setTimeout(restartFiles, 500);
+//
+//				} else if(totalPercent*(x) < 100) {
+//
+//					// Show that the files are uploading
+//					$('#loading-content').html('Uploading '+fileName);
+//
+//				}
+//
+//				// Show a message showing the file URL.
+//				var dataSplit = data.split(':');
+//				if(dataSplit[1] == 'uploaded successfully') {
+//					var realData = '<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>';
+//
+//					$('#uploaded-files').append('<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>');
+//
+//					// Add things to local storage
+//					if(window.localStorage.length == 0) {
+//						y = 0;
+//					} else {
+//						y = window.localStorage.length;
+//					}
+//
+//					window.localStorage.setItem(y, realData);
+//
+//				} else {
+//					$('#uploaded-files').append('<li><a href="images/'+data+'. File Name: '+dataArray[index].name+'</li>');
+//				}
 
-					// Reset everything when the loading is completed
-					setTimeout(restartFiles, 500);
-
-				} else if(totalPercent*(x) < 100) {
-
-					// Show that the files are uploading
-					$('#loading-content').html('Uploading '+fileName);
-
-				}
-
-				// Show a message showing the file URL.
-				var dataSplit = data.split(':');
-				if(dataSplit[1] == 'uploaded successfully') {
-					var realData = '<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>';
-
-					$('#uploaded-files').append('<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>');
-
-					// Add things to local storage
-					if(window.localStorage.length == 0) {
-						y = 0;
-					} else {
-						y = window.localStorage.length;
-					}
-
-					window.localStorage.setItem(y, realData);
-
-				} else {
-					$('#uploaded-files').append('<li><a href="images/'+data+'. File Name: '+dataArray[index].name+'</li>');
-				}
-
-			});
+//			},
+//			"text"
+//			);
 		});
 
 		return false;

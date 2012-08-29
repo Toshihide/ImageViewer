@@ -1,11 +1,10 @@
 <?php
 
 // We're putting all our files in a directory called images.
-$uploaddir = 'images/';
+//$uploaddir = 'images/';
 
 // The posted data, for reference
-$file = $_POST['value'];
-$name = $_POST['name'];
+//$file = $_POST[0];
 
 // Get the mime
 // $getMime = explode('.', $name);
@@ -25,19 +24,19 @@ $name = $_POST['name'];
 
 
 
-$database = 'site1';
-$host = 'localhost';
-$username = 'ii';
-$password = '';
-$link = mysql_connect($host,$username,$password);
-if (!$link) {
-	die(mysql_error());
-}
-$db_selected = mysql_select_db($database);
-if (!$db_selected) {
-	die(mysql_error());
-}
-$result = mysql_query("INSERT INTO m_items (FileName, UserName, Discription, Data, Size, Extension) VALUES('','', '', '$file', '50', '' )") or die(mysql_error());
+//$database = 'site1';
+//$host = 'localhost';
+//$username = 'ii';
+//$password = '';
+//$link = mysql_connect($host,$username,$password);
+//if (!$link) {
+//	die(mysql_error());
+//}
+//$db_selected = mysql_select_db($database);
+//if (!$db_selected) {
+//	die(mysql_error());
+//}
+//$result = mysql_query("INSERT INTO m_items (FileName, UserName, Discription, Data, Size, Extension) VALUES('','', '', '$file', '50', '' )") or die(mysql_error());
 
 
 
@@ -51,5 +50,5 @@ $result = mysql_query("INSERT INTO m_items (FileName, UserName, Discription, Dat
 // 	echo "Something went wrong. Check that the file isn't corrupted";
 // }
 
-
+echo "abcdefg";
 ?>
