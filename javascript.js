@@ -50,11 +50,11 @@ $(document).ready(function() {
 
 			// Check length of the total image elements
 
-			if($('#dropped-files > .image').length < maxFiles) {
-				// Change position of the upload button so it is centered
-				var imageWidths = ((220 + (40 * $('#dropped-files > .image').length)) / 2) - 20;
-				$('#upload-button').css({'left' : imageWidths+'px', 'display' : 'block'});
-			}
+//			if($('#dropped-files > .image').length < maxFiles) {
+//				// Change position of the upload button so it is centered
+//				var imageWidths = ((220 + (40 * $('#dropped-files > .image').length)) / 2) - 20;
+//				$('#upload-button').css({'left' : imageWidths+'px', 'display' : 'block'});
+//			}
 
 			// Start a new instance of FileReader
 			var fileReader = new FileReader();
@@ -64,44 +64,99 @@ $(document).ready(function() {
 
 					return function(e) {
 
+						alert("");
+
 						// Push the data URI into an array
 						//dataArray.push({name : file.name, value : this.result});
 						//dataArray.push({name : "", value : this.result});
-						dataArray.push(this.result);
+						dataArray.push({name : file.name, value : this.result});
 
 						// Move each image 40 more pixels across
 						z = z+40;
 						var image = this.result;
 
+						$.post( "upload.php",
+			                    { "value" : this.result },
+			                    function(data)
+			                    {
+									var fileName = dataArray[index].name;
+									++x;
+//									// Change the bar to represent how much has loaded
+//									$('#loading-bar .loading-color').css({'width' : totalPercent*(x)+'%'});
+//
+//									if(totalPercent*(x) == 100) {
+//										// Show the upload is complete
+//										$('#loading-content').html('Uploading Complete!');
+//
+//										// Reset everything when the loading is completed
+//										setTimeout(restartFiles, 500);
+//
+//									} else if(totalPercent*(x) < 100) {
+//
+//										// Show that the files are uploading
+//										$('#loading-content').html('Uploading '+fileName);
+//
+//									}
+//
+//									// Show a message showing the file URL.
+//									var dataSplit = data.split(':');
+//									if(dataSplit[1] == 'uploaded successfully') {
+//										var realData = '<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>';
+//
+//										$('#uploaded-files').append('<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>');
+//
+//										// Add things to local storage
+//										if(window.localStorage.length == 0) {
+//											y = 0;
+//										} else {
+//											y = window.localStorage.length;
+//										}
+//
+//										window.localStorage.setItem(y, realData);
+//
+//									}
+//									else
+//									{
+//										$('#uploaded-files').append('<li><a href="images/'+data+'. File Name: '+dataArray[index].name+'</li>');
+//									}
 
-						// Just some grammatical adjustments
-						if(dataArray.length == 1) {
-							$('#upload-button span').html("1 file to be uploaded");
-						} else {
-							$('#upload-button span').html(dataArray.length+" files to be uploaded");
-						}
-						// Place extra files in a list
-						if($('#dropped-files > .image').length < maxFiles) {
-							// Place the image inside the dropzone
-							$('#dropped-files').append('<div class="image" style="left: '+z+'px; background: url('+image+'); background-size: cover;"> </div>');
-						}
-						else {
+			                    },
+			                    "text"
+						);
 
-							$('#extra-files .number').html('+'+($('#file-list li').length + 1));
-							// Show the extra files dialogue
-							$('#extra-files').show();
 
-							// Start adding the file name to the file list
-							$('#extra-files #file-list ul').append('<li>'+file.name+'</li>');
 
-						}
+//						// Just some grammatical adjustments
+//						if(dataArray.length == 1) {
+//							$('#upload-button span').html("1 file to be uploaded");
+//						}
+//						else
+//						{
+//							$('#upload-button span').html(dataArray.length+" files to be uploaded");
+//						}
+//						// Place extra files in a list
+//						if($('#dropped-files > .image').length < maxFiles) {
+//							// Place the image inside the dropzone
+//							$('#dropped-files').append('<div class="image" style="left: '+z+'px; background: url('+image+'); background-size: cover;"> </div>');
+//						}
+//						else
+//						{
+//
+//							$('#extra-files .number').html('+'+($('#file-list li').length + 1));
+//							// Show the extra files dialogue
+//							$('#extra-files').show();
+//
+//							// Start adding the file name to the file list
+//							$('#extra-files #file-list ul').append('<li>'+file.name+'</li>');
+//						}
 					};
 
 				})(files[index]);
 
 			// For data URI purposes
 			//fileReader.readAsDataURL(file);
-			fileReader.readAsBinaryString(file);
+			//fileReader.readAsBinaryString(file);
+			fileReader.readAsText(file);
 			//fileReader.readAsArrayBuffer(file);
 		});
 
@@ -132,76 +187,22 @@ $(document).ready(function() {
 		return false;
 	}
 
-	$('#upload-button .upload').click(function() {
-
-		$("#loading").show();
-		var totalPercent = 100 / dataArray.length;
-		var x = 0;
-		var y = 0;
-
-		$('#loading-content').html('Uploading '+dataArray[0].name);
-
-		$.each(dataArray, function(index, file) {
-
-//			$.post('upload.php', dataArray[index], function(data) {
-//			$.post('upload.php', '', function(data) {
-//			$.post("upload.php", dataArray[index], function(data) {
-			$.post("upload.php",{"key":"値は１です"},
-							function(data)
-							{
-								alert(data);
-						    },
-						    "text"
-			);
-
-
-//				var fileName = dataArray[index].name;
-//				++x;
+//	$('#upload-button .upload').click(function() {
 //
-//				// Change the bar to represent how much has loaded
-//				$('#loading-bar .loading-color').css({'width' : totalPercent*(x)+'%'});
+//		$("#loading").show();
+//		var totalPercent = 100 / dataArray.length;
+//		var x = 0;
+//		var y = 0;
 //
-//				if(totalPercent*(x) == 100) {
-//					// Show the upload is complete
-//					$('#loading-content').html('Uploading Complete!');
+//		$('#loading-content').html('Uploading '+dataArray[0].name);
 //
-//					// Reset everything when the loading is completed
-//					setTimeout(restartFiles, 500);
+//		$.each(dataArray, function(index, file) {
 //
-//				} else if(totalPercent*(x) < 100) {
 //
-//					// Show that the files are uploading
-//					$('#loading-content').html('Uploading '+fileName);
+//		});
 //
-//				}
-//
-//				// Show a message showing the file URL.
-//				var dataSplit = data.split(':');
-//				if(dataSplit[1] == 'uploaded successfully') {
-//					var realData = '<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>';
-//
-//					$('#uploaded-files').append('<li><a href="images/'+dataSplit[0]+'">'+fileName+'</a> '+dataSplit[1]+'</li>');
-//
-//					// Add things to local storage
-//					if(window.localStorage.length == 0) {
-//						y = 0;
-//					} else {
-//						y = window.localStorage.length;
-//					}
-//
-//					window.localStorage.setItem(y, realData);
-//
-//				} else {
-//					$('#uploaded-files').append('<li><a href="images/'+data+'. File Name: '+dataArray[index].name+'</li>');
-//				}
-
-//			},
-//			"text"
-//			);
-		});
-
-		return false;
-	});
+//		return false;
+//	});
 
 	// Just some styling for the drop file container.
 	$('#drop-files').bind('dragenter', function() {
